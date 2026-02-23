@@ -675,3 +675,11 @@ body {
     text-align: center;
   }
 }
+.circle-progress {
+  stroke: #38bdf8;
+  stroke-width: 12;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 0.6s ease;
+}

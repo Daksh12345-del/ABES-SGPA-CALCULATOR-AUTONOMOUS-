@@ -72,12 +72,17 @@ function calculateSGPA() {
 
   subjects.forEach((subject, index) => {
     const marks = parseFloat(document.getElementById(`marks-${index}`).value) || 0;
-    weightedSum += getGradePoint(marks) * subject.credits;
+    const gradePoint = getGradePoint(marks);
+
+    weightedSum += gradePoint * subject.credits;
     totalCredits += subject.credits;
   });
 
   const sgpa = weightedSum / totalCredits || 0;
+
   document.getElementById("sgpaText").innerText = sgpa.toFixed(2);
+
+  updateCircle(sgpa);
 }
 
 renderSubjects();
@@ -179,3 +184,15 @@ toggleBtn.addEventListener("click", () => {
     localStorage.setItem("theme", "dark");
   }
 });
+function updateCircle(sgpa) {
+  const circle = document.querySelector(".circle-progress");
+
+  const radius = 70; // must match SVG r="70"
+  const circumference = 2 * Math.PI * radius;
+
+  circle.style.strokeDasharray = circumference;
+
+  const offset = circumference - (sgpa / 10) * circumference;
+
+  circle.style.strokeDashoffset = offset;
+}
