@@ -274,9 +274,13 @@ body {
 
 /* Hero Text */
 .main-title {
-  font-size: 52px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 42px;
+  letter-spacing: 3px;
+  margin: 0;
+  color: #38bdf8;
+  word-break: break-word;
 }
-
 .sub-title {
   font-size: 22px;
 }
@@ -635,4 +639,39 @@ body {
   justify-content: space-between;
   padding: 4px 0;
   font-size: 12px;
+}
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px) {
+
+  .hero {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .hero-brand {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .hero-brand img {
+    height: 70px;
+  }
+
+  .main-title {
+    font-size: 28px;   /* smaller */
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .sub-title {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .developer {
+    font-size: 13px;
+    text-align: center;
+  }
 }
