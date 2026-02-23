@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABES SGPA Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-brand">
+    <img src="logo.png" alt="Logo">
+    <div>
+      <h1 class="main-title">ABES SGPA CALCULATOR</h1>
+      <h2 class="sub-title">(AUTONOMOUS)</h2>
+      <p class="developer">Developed by Daksh Singhal</p>
+    </div>
+  </div>
+  <button id="themeToggle" class="theme-toggle">🌙</button>
+</section>
+
+<!-- CONTROL BOX -->
+<section class="control-box">
+  <h3>Academic Selection</h3>
+  <div class="control-fields">
+    <select id="semesterSelect">
+      <option value="1">Semester 1</option>
+      <option value="2">Semester 2</option>
+      <option value="3">Semester 3</option>
+      <option value="4">Semester 4</option>
+      <option value="5">Semester 5</option>
+      <option value="6">Semester 6</option>
+      <option value="7">Semester 7</option>
+      <option value="8">Semester 8</option>
+    </select>
+
+    <select id="groupSelect">
+      <option value="A">Group A</option>
+      <option value="B">Group B</option>
+    </select>
+
+    <select id="deptSelect">
+      <option>CSE</option>
+      <option>CS</option>
+      <option>IT</option>
+      <option>ME</option>
+      <option>ECE</option>
+      <option>EEE</option>
+      <option>Other</option>
+    </select>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="dashboard">
+
+  <div class="left-panel">
+    <div id="subjectsContainer" class="grid"></div>
+  </div>
+
+  <div class="right-panel">
+
+    <div class="sgpa-card">
+      <h2>Live SGPA</h2>
+      <div class="circle-wrapper">
+        <svg width="150" height="150">
+          <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+          <circle class="circle-progress" cx="75" cy="75" r="70"></circle>
+        </svg>
+        <div class="circle-text" id="sgpaText">0.00</div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <h3>Performance Insight</h3>
+      <p id="insightText">Enter marks to see insights...</p>
+    </div>
+      <div class="grading-system">
+    <h4>Standard Grading System</h4>
+    <ul>
+      <li><span>90 – 100</span> <strong>O (Outstanding)</strong></li>
+      <li><span>80 – 89</span> <strong>A+</strong></li>
+      <li><span>70 – 79</span> <strong>A</strong></li>
+      <li><span>60 – 69</span> <strong>B+</strong></li>
+      <li><span>50 – 59</span> <strong>B</strong></li>
+      <li><span>40 – 49</span> <strong>C</strong></li>
+      <li><span>&lt; 40</span> <strong>F (Fail)</strong></li>
+    </ul>
+  </div>
+
+
+
+  </div>
+</section>
+
+<!-- GRAPH SECTION -->
+<section class="progress-section">
+  <h2>Academic Improvement Graph</h2>
+
+  <div class="cgpa-input-wrapper">
+    <input type="number" id="sgpaInput" placeholder="Enter SGPA (0-10)" step="0.01">
+    <button id="addSemesterBtn">Add Semester</button>
+  </div>
+
+  <canvas id="progressChart"></canvas>
+</section>
+
+<!-- OVERALL CGPA -->
+<section class="cgpa-average-section">
+  <h3>Overall CGPA Calculator</h3>
+
+  <div class="cgpa-input-row">
+    <input type="number" id="overallInput" placeholder="Enter Semester SGPA" step="0.01">
+    <button id="addOverallBtn">Add</button>
+  </div>
+
+  <div class="semester-list" id="semesterList"></div>
+
+  <div class="average-display">
+    Average CGPA: <span id="averageCGPA">0.00</span>
+  </div>
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
