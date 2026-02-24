@@ -928,3 +928,41 @@ body {
   stroke-dashoffset: 502;
   transition: stroke-dashoffset 0.5s ease;
 }
+.graph-summary {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.graph-avg {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 10px 0 15px;
+  color: #38bdf8;
+}
+
+.export-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #38bdf8;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.export-btn:hover {
+  background: #0ea5e9;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+  .graph-summary {
+    margin-top: 20px;
+  }
+
+  .export-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}

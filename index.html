@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ABES CGPA Calculator</title>
+
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="logo.png">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
@@ -18,7 +22,6 @@
     <div>
       <h1 class="main-title">CGPA CALCULATOR</h1>
       <h2 class="sub-title">(AUTONOMOUS)</h2>
-      <!-- <p class="developer">Developed by Daksh Singhal</p> -->
     </div>
   </div>
   <button id="themeToggle" class="theme-toggle">🌙</button>
@@ -53,99 +56,121 @@
 <!-- DASHBOARD -->
 <section class="dashboard">
 
+  <!-- LEFT PANEL -->
   <div class="left-panel">
     <div id="subjectsContainer" class="grid"></div>
   </div>
 
+  <!-- RIGHT PANEL -->
   <div class="right-panel">
 
+    <!-- SGPA CARD -->
     <div class="sgpa-card">
       <h2>Live SGPA</h2>
+
       <div class="circle-wrapper">
-  <svg viewBox="0 0 200 200">
-    <circle
-      class="circle-bg"
-      cx="100"
-      cy="100"
-      r="80"
-      stroke-width="12"
-      fill="none"
-    ></circle>
+        <svg viewBox="0 0 200 200">
+          <circle class="circle-bg"
+                  cx="100" cy="100"
+                  r="80"
+                  stroke-width="12"
+                  fill="none"></circle>
 
-    <circle
-      class="circle-progress"
-      cx="100"
-      cy="100"
-      r="80"
-      stroke-width="12"
-      fill="none"
-    ></circle>
-  </svg>
+          <circle class="circle-progress"
+                  cx="100" cy="100"
+                  r="80"
+                  stroke-width="12"
+                  fill="none"></circle>
+        </svg>
 
-  <div class="circle-text" id="sgpaText">0.00</div>
-</div>
-      
+        <div class="circle-text" id="sgpaText">0.00</div>
+      </div>
     </div>
 
+    <!-- PERFORMANCE INSIGHT -->
     <div class="insight-card">
       <h3>Performance Insight</h3>
-      <p id="insightText">Enter marks to see insights...
+      <p id="insightText">Enter marks to see insights...</p>
     </div>
-      <div class="grading-system">
-    <h4>Standard Grading System</h4>
-    <ul>
-      <li><span>90 – 100</span> <strong>O (Outstanding)</strong></li>
-      <li><span>80 – 89</span> <strong>A+</strong></li>
-      <li><span>70 – 79</span> <strong>A</strong></li>
-      <li><span>60 – 69</span> <strong>B+</strong></li>
-      <li><span>50 – 59</span> <strong>B</strong></li>
-      <li><span>40 – 49</span> <strong>C</strong></li>
-      <li><span>&lt; 40</span> <strong>F (Fail)</strong></li>
-    </ul>
-    <section class="progress-section">
-  <h2>Academic Improvement Graph</h2>
 
-  <div class="cgpa-input-wrapper">
-    <input type="number" id="sgpaInput" placeholder="Enter SGPA (0-10)" step="0.01">
-    <button id="addSemesterBtn">Add Semester</button>
+    <!-- GRADING SYSTEM -->
+    <div class="grading-system">
+      <h4>Standard Grading System</h4>
+      <ul>
+        <li><span>90 – 100</span> <strong>O (Outstanding)</strong></li>
+        <li><span>80 – 89</span> <strong>A+</strong></li>
+        <li><span>70 – 79</span> <strong>A</strong></li>
+        <li><span>60 – 69</span> <strong>B+</strong></li>
+        <li><span>50 – 59</span> <strong>B</strong></li>
+        <li><span>40 – 49</span> <strong>C</strong></li>
+        <li><span>&lt; 40</span> <strong>F (Fail)</strong></li>
+      </ul>
+    </div>
+
+    <!-- PDF WRAPPER -->
+    <div id="pdfContent">
+
+      <section class="progress-section">
+        <h2>Academic Improvement Graph</h2>
+
+        <div class="cgpa-input-wrapper">
+          <input type="number"
+                 id="sgpaInput"
+                 placeholder="Enter SGPA (0-10)"
+                 step="0.01">
+          <button id="addSemesterBtn">Add Semester</button>
+        </div>
+
+        <canvas id="progressChart"></canvas>
+
+        <div class="graph-summary">
+          <h4>Overall Average SGPA</h4>
+          <div class="graph-avg" id="graphAverage">0.00</div>
+
+          <button id="exportPdfBtn" class="export-btn">
+            Export as PDF
+          </button>
+        </div>
+      </section>
+
+    </div>
+
   </div>
 
-  <canvas id="progressChart"></canvas>
 </section>
-  </div>
-
-
-
-  </div>
-</section>
-
-<!-- GRAPH SECTION -->
-<!-- <section class="progress-section">
-  <h2>Academic Improvement Graph</h2>
-
-  <div class="cgpa-input-wrapper">
-    <input type="number" id="sgpaInput" placeholder="Enter SGPA (0-10)" step="0.01">
-    <button id="addSemesterBtn">Add Semester</button>
-  </div>
-
-  <canvas id="progressChart"></canvas>
-</section> -->
 
 <!-- OVERALL CGPA -->
 <section class="cgpa-average-section">
   <h3>Overall CGPA Calculator</h3>
 
   <div class="cgpa-input-row">
-    <input type="number" id="overallInput" placeholder="Enter Semester SGPA" step="0.01">
+    <input type="number"
+           id="overallInput"
+           placeholder="Enter Semester SGPA"
+           step="0.01">
     <button id="addOverallBtn">Add</button>
   </div>
 
   <div class="semester-list" id="semesterList"></div>
 
   <div class="average-display">
-    Average CGPA: <span id="averageCGPA">0.00</span>
+    Average CGPA:
+    <span id="averageCGPA">0.00</span>
   </div>
 </section>
+<div id="reportContainer" style="display:none; padding:30px; background:#fff; color:#000;">
+  <h2>ABES CGPA Report</h2>
+
+  <div id="reportSubjects"></div>
+
+  <h3>SGPA: <span id="reportSgpa"></span></h3>
+  <h3>Overall Average: <span id="reportAvg"></span></h3>
+
+  <div>
+    <h3>Academic Improvement Graph</h3>
+    <img id="reportChartImg" style="width:100%; max-width:500px;">
+  </div>
+</div>
 
 <script src="script.js"></script>
 

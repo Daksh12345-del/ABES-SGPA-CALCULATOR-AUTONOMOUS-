@@ -235,3 +235,53 @@ document.addEventListener("DOMContentLoaded", function () {
     feedbackSection.classList.toggle("show-feedback");
   });
 });
+document.getElementById("exportPdfBtn").addEventListener("click", async function () {
+
+  const reportContainer = document.getElementById("reportContainer");
+  const reportSubjects = document.getElementById("reportSubjects");
+
+  reportSubjects.innerHTML = "";
+
+  // Add subjects with marks
+  const subjects = semester1[groupSelect.value];
+
+  subjects.forEach((subject, index) => {
+    const marks = document.getElementById(`marks-${index}`).value || "0";
+
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <p><strong>${subject.code}</strong> - ${subject.name}
+      | Marks: ${marks} | Credits: ${subject.credits}</p>
+    `;
+    reportSubjects.appendChild(div);
+  });
+
+  // Add SGPA and Average
+  document.getElementById("reportSgpa").innerText =
+    document.getElementById("sgpaText").innerText;
+
+  document.getElementById("reportAvg").innerText =
+    document.getElementById("graphAverage").innerText;
+
+  // Convert Chart to image
+  const chartCanvas = document.getElementById("progressChart");
+  const chartImage = chartCanvas.toDataURL("image/png");
+  document.getElementById("reportChartImg").src = chartImage;
+
+  reportContainer.style.display = "block";
+
+  const canvas = await html2canvas(reportContainer, { scale: 2 });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const imgWidth = 190;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+  pdf.save("ABES_CGPA_Report.pdf");
+
+  reportContainer.style.display = "none";
+});
