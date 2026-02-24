@@ -85,6 +85,7 @@ function calculateSGPA() {
 }
 
 renderSubjects();
+updateCircle(0);
 
 /* ===== GRAPH + CGPA ===== */
 
@@ -214,14 +215,16 @@ toggleBtn.addEventListener("click", () => {
 function updateCircle(sgpa) {
   const circle = document.querySelector(".circle-progress");
 
-  const radius = 70;
+  const radius = 80;
   const circumference = 2 * Math.PI * radius;
 
   circle.style.strokeDasharray = circumference;
+  circle.style.strokeDashoffset = circumference; // reset first
+
   const offset = circumference - (sgpa / 10) * circumference;
+
   circle.style.strokeDashoffset = offset;
 }
-
 /* ===== FEEDBACK TOGGLE ===== */
 
 document.addEventListener("DOMContentLoaded", function () {
