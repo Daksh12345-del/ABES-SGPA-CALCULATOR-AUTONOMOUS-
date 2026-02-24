@@ -18,7 +18,7 @@
     <div>
       <h1 class="main-title">ABES SGPA CALCULATOR</h1>
       <h2 class="sub-title">(AUTONOMOUS)</h2>
-      <p class="developer">Developed by Daksh Singhal</p>
+      <!-- <p class="developer">Developed by Daksh Singhal</p> -->
     </div>
   </div>
   <button id="themeToggle" class="theme-toggle">🌙</button>
@@ -68,11 +68,12 @@
         </svg>
         <div class="circle-text" id="sgpaText">0.00</div>
       </div>
+      
     </div>
 
     <div class="insight-card">
       <h3>Performance Insight</h3>
-      <p id="insightText">Enter marks to see insights...</p>
+      <p id="insightText">Enter marks to see insights...
     </div>
       <div class="grading-system">
     <h4>Standard Grading System</h4>
@@ -85,15 +86,7 @@
       <li><span>40 – 49</span> <strong>C</strong></li>
       <li><span>&lt; 40</span> <strong>F (Fail)</strong></li>
     </ul>
-  </div>
-
-
-
-  </div>
-</section>
-
-<!-- GRAPH SECTION -->
-<section class="progress-section">
+    <section class="progress-section">
   <h2>Academic Improvement Graph</h2>
 
   <div class="cgpa-input-wrapper">
@@ -103,6 +96,24 @@
 
   <canvas id="progressChart"></canvas>
 </section>
+  </div>
+
+
+
+  </div>
+</section>
+
+<!-- GRAPH SECTION -->
+<!-- <section class="progress-section">
+  <h2>Academic Improvement Graph</h2>
+
+  <div class="cgpa-input-wrapper">
+    <input type="number" id="sgpaInput" placeholder="Enter SGPA (0-10)" step="0.01">
+    <button id="addSemesterBtn">Add Semester</button>
+  </div>
+
+  <canvas id="progressChart"></canvas>
+</section> -->
 
 <!-- OVERALL CGPA -->
 <section class="cgpa-average-section">

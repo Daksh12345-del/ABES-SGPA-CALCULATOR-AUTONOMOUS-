@@ -81,7 +81,6 @@ function calculateSGPA() {
   const sgpa = weightedSum / totalCredits || 0;
 
   document.getElementById("sgpaText").innerText = sgpa.toFixed(2);
-
   updateCircle(sgpa);
 }
 
@@ -108,11 +107,29 @@ const progressChart = new Chart(ctx, {
     }]
   },
   options: {
+    responsive: true,
     scales: {
-      y: { min: 0, max: 10 }
+      y: {
+        beginAtZero: false
+      }
     }
   }
 });
+
+/* ===== SMART AUTO ZOOM ===== */
+
+function updateYAxis() {
+  if (sgpaData.length === 0) return;
+
+  const minValue = Math.min(...sgpaData);
+  const maxValue = Math.max(...sgpaData);
+  const padding = 0.5;
+
+  progressChart.options.scales.y.min = Math.max(0, minValue - padding);
+  progressChart.options.scales.y.max = Math.min(10, maxValue + padding);
+}
+
+/* ===== ADD SEMESTER ===== */
 
 document.getElementById("addSemesterBtn").addEventListener("click", () => {
   const input = document.getElementById("sgpaInput");
@@ -126,10 +143,14 @@ document.getElementById("addSemesterBtn").addEventListener("click", () => {
   semesterLabels.push("Sem " + (semesterLabels.length + 1));
   sgpaData.push(value);
 
+  updateYAxis();
   progressChart.update();
   updateOverallCGPA();
+
   input.value = "";
 });
+
+/* ===== OVERALL CGPA ===== */
 
 document.getElementById("addOverallBtn").addEventListener("click", () => {
   const input = document.getElementById("overallInput");
@@ -143,14 +164,17 @@ document.getElementById("addOverallBtn").addEventListener("click", () => {
   semesterLabels.push("Sem " + (semesterLabels.length + 1));
   sgpaData.push(value);
 
+  updateYAxis();
   progressChart.update();
   updateOverallCGPA();
+
   input.value = "";
 });
 
 function updateOverallCGPA() {
   if (sgpaData.length === 0) {
     document.getElementById("averageCGPA").innerText = "0.00";
+    document.getElementById("graphAverage").innerText = "0.00";
     return;
   }
 
@@ -160,8 +184,8 @@ function updateOverallCGPA() {
   document.getElementById("semesterList").innerText =
     "Semesters: " + sgpaData.join(" , ");
 
-  document.getElementById("averageCGPA").innerText =
-    avg.toFixed(2);
+  document.getElementById("averageCGPA").innerText = avg.toFixed(2);
+  document.getElementById("graphAverage").innerText = avg.toFixed(2);
 }
 
 /* ===== THEME TOGGLE ===== */
@@ -184,15 +208,27 @@ toggleBtn.addEventListener("click", () => {
     localStorage.setItem("theme", "dark");
   }
 });
+
+/* ===== CIRCLE PROGRESS ===== */
+
 function updateCircle(sgpa) {
   const circle = document.querySelector(".circle-progress");
 
-  const radius = 70; // must match SVG r="70"
+  const radius = 70;
   const circumference = 2 * Math.PI * radius;
 
   circle.style.strokeDasharray = circumference;
-
   const offset = circumference - (sgpa / 10) * circumference;
-
   circle.style.strokeDashoffset = offset;
 }
+
+/* ===== FEEDBACK TOGGLE ===== */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const feedbackBtn = document.getElementById("feedbackToggle");
+  const feedbackSection = document.getElementById("feedbackSection");
+
+  feedbackBtn.addEventListener("click", function () {
+    feedbackSection.classList.toggle("show-feedback");
+  });
+});
